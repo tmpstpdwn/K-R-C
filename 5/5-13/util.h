@@ -1,0 +1,1 @@
+int isnum(char *s);
