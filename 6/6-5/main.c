@@ -55,6 +55,25 @@ struct nlist *install(char *name, char *defn) {
   return np;
 }
 
+void undef(char *s) {
+  struct nlist *np;
+  struct nlist *pp = NULL;
+  int h = hash(s);
+  for (np = hashtable[h]; np != NULL; pp = np, np = np->next) {
+    if (strcmp(s, np->name) == 0) {
+      if (pp != NULL) {
+        pp->next = np->next;
+      } else {
+        hashtable[h] = np->next;
+      }
+      free(np->name);
+      free(np->defn);
+      free(np);
+    }
+    break;
+  }
+}
+
 int main() {
   return 0;
 }
